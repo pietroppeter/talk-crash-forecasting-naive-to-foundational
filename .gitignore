@@ -11,3 +11,6 @@ wheels/
 
 # data
 data/m5
+
+# jupyter
+.ipynb_checkpoints

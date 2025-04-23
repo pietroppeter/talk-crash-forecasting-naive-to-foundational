@@ -1,3 +1,5 @@
+import seaborn as sns
+
 def main():
     print("Hello from talk-crash-forecasting-naive-to-foundational!")
 

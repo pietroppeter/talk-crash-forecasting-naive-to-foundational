@@ -11,16 +11,32 @@ format:
 ---
 ## Agenda
 
-1. why, domain, data
-2. explore, naive, evaluate
+1. why, domain, data (intro)
+2. explore, naive, evaluate (basics)
 3. stats, ml, decompose, transform
 4. probabilistic, hierarchical
-5. neural, foundatio
+5. neural, foundational
 6. refs
 
 ## python test
 
 ```{python}
 print("hello")
+```
+
+## hello AirPassengers
+
+<!--
+- hello world of timeseries forecasting dataset
+- how to load the timeseries
+- show the timeseries
+-->
+```{python}
+import polars as pl
+import seaborn as sns
+
+path = "data/airpassengers/airpassengers.csv"
+df = pl.read_csv(path).with_columns(pl.col("Month").str.to_date("%Y-%m"))
+sns.lineplot(x="Month", y="#Passengers", data=df)
 ```
 

@@ -1,8 +1,15 @@
+## todo
+
+- hello airPassengers
+  - first draft with polars and seaborn ok! [x]
+  - redo with native polars plot (uv add altair)
+- what about prophet?
 ## quarto
 
 - how to make it use uv?
-- as of now the main way is to activate venv, see https://github.com/quarto-dev/quarto-cli/discussions/11257
-
+    - as of now the main way is to activate venv, see https://github.com/quarto-dev/quarto-cli/discussions/11257
+- in slides default is not to show code
+- it does take a moment to activate a render environment
 
 ## Agenda
 ## Refs

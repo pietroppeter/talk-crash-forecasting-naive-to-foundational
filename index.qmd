@@ -13,18 +13,74 @@ format:
 
 1. why, domain, data (intro)
 2. explore, naive, evaluate (basics)
-3. stats, ml, decompose, transform
-4. probabilistic, hierarchical
-5. neural, foundational
+3. stats, ml, decompose, transform (workhorse)
+4. probabilistic, hierarchical (advanced)
+5. neural, foundational (more)
 6. refs
 
-## python test
+## 👋 Hi, I am Pietro  👨‍👩‍👧
 
-```{python}
-print("hello")
-```
+- Data Scientist @ [agilelab.it](agilelab.it) ⚪️🔵
+  - 📘[handbook](), 🤙[holacracy]() (self-management)
+- (previously) 8+ years at Software Vendor in Supply Chain
+- 🐍🇮🇹 Python/PyData Milano [milano.python.it]()
+- 🐙 [github.com/pietroppeter](github.com/pietroppeter) (👈 more socials 🔗)
 
-## hello AirPassengers
+🎪 Come to PyCon Italy (Bologna, May 29-31)! 🍝
+
+## why forecasting?
+<!--
+predicting things in the future should be useful, right?
+- let's make a short list of use cases
+- and let's try to think about the business value
+- sales
+  - predicting my sales allows me to
+    - plan my investments (should I hire more people?)
+    - plan my effort (if I predict sales are going down what should I do?)
+  - predicting my demand
+    - plan how much product to manifacture, buy or ship
+    - plan if I have the capacity to satisfy the demand
+    - reduce inventory or avoid lost sales
+-->
+domains
+
+- 📈 sales/demand
+- 🔋 energy consumption
+- 💹 financial assets
+- 🌤️ weather
+- ...
+
+where is the (business) value? 💰
+
+take better decisions! 💡
+<!--how do I make things appear later?-->
+
+## 🏹 taking time seriously
+<!--
+time is the most important dimension in time series forecasting
+
+- time frequency
+- time horizon
+- lags (watch out for index 0 definition)
+
+
+other dimensions (multiple time series)
+- e.g. product, market, ...
+
+other problems in time series
+- anomaly detection, classification
+- forecast initialization
+-->
+time is the most important dimension
+
+- time frequency (months, weeks, days, hours, ...)
+- time horizon (how many weeks in the future)?
+- lag n forecast: the forecast for the n-th time bucket in the future
+
+other dimensions (e.g. product, market, ...) usually lead
+to forecasting _multiple_ time series (or _multivariate_ ones)
+
+## hello AirPassengers - legacy
 
 <!--
 - hello world of timeseries forecasting dataset
@@ -33,10 +89,35 @@ print("hello")
 -->
 ```{python}
 import polars as pl
-import seaborn as sns
+import plotly.express as px
 
 path = "data/airpassengers/airpassengers.csv"
 df = pl.read_csv(path).with_columns(pl.col("Month").str.to_date("%Y-%m"))
-sns.lineplot(x="Month", y="#Passengers", data=df)
+px.line(df, x="Month", y="#Passengers", height=400)
+```
+
+## data AirPassengers (from nixtla)
+
+<!--
+- hello world of timeseries forecasting dataset
+- how to load the timeseries
+- show the timeseries
+-->
+```{python}
+import polars as pl
+
+url = "https://datasets-nixtla.s3.amazonaws.com/air-passengers.csv"
+air = pl.read_csv(url).with_columns(pl.col("ds").str.to_date())
+air.head(3)
+```
+
+## split train test
+
+```{python}
+from statsforecast import StatForecast
+
+sf = StatForecast()
+
+sf.plot(air)
 ```
 

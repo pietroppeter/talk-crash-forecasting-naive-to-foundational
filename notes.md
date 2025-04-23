@@ -1,15 +1,43 @@
 ## todo
 
-- hello airPassengers
-  - first draft with polars and seaborn ok! [x]
-  - redo with native polars plot (uv add altair)
+- intro 4/5-7
+  - 1. agenda [x]
+    - first draft [x]
+    - fix at the end
+  - 2. me slide [x]
+  - 3. why (business) [x]
+    - first draft [x]
+    - domain?
+  - 4. time
+    - first draft [x]
+  - scope/focus?
+  - data (about numerosity and layout)
+  - why nixtla
+- basics
+  - 1. hello airPassengers [x]
+    - first draft with polars and seaborn ok! [x]
+    - redo with plotly [x]
+    - what could be a good url ref for airpassengers?
+    - stats forecast has the good url! https://nixtlaverse.nixtla.io/statsforecast/docs/getting-started/getting_started_short.html
+  - 2. hello evaluate
+  - 3. naive baseline
+  - 4. more time series: M5
 - what about prophet?
+
+## nixtla
+
+- statsforecast build fails on my mac from 1.7.7 (because of moving from numba to C++)
+    - using 1.7.6 (released july 2024)
+    - 1.7.7 released sep 2024
+    - 2.0.0 released nov 2024
+
 ## quarto
 
 - how to make it use uv?
     - as of now the main way is to activate venv, see https://github.com/quarto-dev/quarto-cli/discussions/11257
 - in slides default is not to show code
 - it does take a moment to activate a render environment
+- argh altair with quarto reveal has issues! https://github.com/quarto-dev/quarto-cli/issues/10903 (works in chrome, not in preview)
 
 ## Agenda
 ## Refs

@@ -6,5 +6,21 @@ format:
   revealjs:
     logo: agilelab.png
     footer: "PyCon Lithuania, Vilnius, 250424"
+    execute:
+      echo: true
 ---
 ## Agenda
+
+1. why, domain, data
+2. explore, naive, evaluate
+3. stats, ml, decompose, transform
+4. probabilistic, hierarchical
+5. neural, foundatio
+6. refs
+
+## python test
+
+```{python}
+print("hello")
+```
+

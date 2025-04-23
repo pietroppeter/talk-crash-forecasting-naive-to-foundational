@@ -1,6 +1,14 @@
+## quarto
+
+- how to make it use uv?
+- as of now the main way is to activate venv, see https://github.com/quarto-dev/quarto-cli/discussions/11257
+
+
 ## Agenda
 ## Refs
 - books on time series forecasting
+
+## time is 25'!!!
 
 ## Proposal
 

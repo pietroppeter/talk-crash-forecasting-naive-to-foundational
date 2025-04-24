@@ -10,28 +10,32 @@ todo new plan:
 - test adding code (without execution) [x]
 
 slides (target is 20)
+0. title [x]
 1. agenda
 2. me [x]
 3. why [x]
 4. time [x]
 5. nixtla [x]
-  - add words?
 6. methodology [x]
-7. airpassengers
-8. baseline (options) [x]
-9. baseline (code)
-10. measure (metrics)
-11. cross validation [x]
-12. measure (code)
-13. statsforecast
-14. M5 [x]
-15. mlforecast [x]
-16. probabilistic forecast
-17. hierarchical [x]
-18. neural forecast
-19. foundational [x]
-20. refs
-completed: 11/20
+
+1. airpassengers data [x]
+2. airpassengers plot [x]
+3. split [x]
+4. baseline [x]
+5. statsforecast [x]
+6. probabilistic forecast [x]
+7. cross validation [x]
+8. measure [x]
+
+1. M5 [x]
+2. mlforecast [x]
+3. hierarchical [x]
+4. neural forecast [x]
+5. foundational [x]
+
+total is 7 + 8 + 5 = 20
+
+completed: 13/20
 
 (skip decomposition?)
 

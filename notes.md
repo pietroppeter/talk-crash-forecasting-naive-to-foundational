@@ -1,4 +1,42 @@
+## new plan
+
+- just adjust previous presentation
+- no code execution (once in notebook and take screenshots!)
+
+todo new plan:
+- list all slides in todo [x]
+
+slides (target is 20)
+1. agenda
+2. me [x]
+3. why [x]
+4. time [x]
+5. nixtla
+6. methodology [x]
+7. airpassengers
+8. baseline (options) [x]
+9. baseline (code)
+10. measure (metrics)
+11. cross validation
+12. measure (code)
+13. statforecast
+14. M5
+15. mlforecast
+16. probabilistic forecast
+17. hierarchical
+18. neural forecast
+19. foundational
+20. refs
+completed: 5/20
+
 ## todo
+
+plan:
+- finish snippets of code
+- write snippets of code in slides
+- test how not to execute code in slides
+- finish writing the text
+
 
 - intro 4/5-7
   - 1. agenda [x]

@@ -11,12 +11,7 @@ format:
 ---
 ## Agenda
 
-1. why, domain, data (intro)
-2. explore, naive, evaluate (basics)
-3. stats, ml, decompose, transform (workhorse)
-4. probabilistic, hierarchical (advanced)
-5. neural, foundational (more)
-6. refs
+todo
 
 ## 👋 Hi, I am Pietro  👨‍👩‍👧
 
@@ -29,19 +24,7 @@ format:
 🎪 Come to PyCon Italy (Bologna, May 29-31)! 🍝
 
 ## why forecasting?
-<!--
-predicting things in the future should be useful, right?
-- let's make a short list of use cases
-- and let's try to think about the business value
-- sales
-  - predicting my sales allows me to
-    - plan my investments (should I hire more people?)
-    - plan my effort (if I predict sales are going down what should I do?)
-  - predicting my demand
-    - plan how much product to manifacture, buy or ship
-    - plan if I have the capacity to satisfy the demand
-    - reduce inventory or avoid lost sales
--->
+
 domains
 
 - 📈 sales/demand
@@ -53,24 +36,9 @@ domains
 where is the (business) value? 💰
 
 take better decisions! 💡
-<!--how do I make things appear later?-->
 
 ## 🏹 taking time seriously
-<!--
-time is the most important dimension in time series forecasting
 
-- time frequency
-- time horizon
-- lags (watch out for index 0 definition)
-
-
-other dimensions (multiple time series)
-- e.g. product, market, ...
-
-other problems in time series
-- anomaly detection, classification
-- forecast initialization
--->
 time is the most important dimension
 
 - time frequency (months, weeks, days, hours, ...)
@@ -80,61 +48,75 @@ time is the most important dimension
 other dimensions (e.g. product, market, ...) usually lead
 to forecasting _multiple_ time series (or _multivariate_ ones)
 
-## hello AirPassengers - legacy
+## why nixtla
 
-<!--
-- hello world of timeseries forecasting dataset
-- how to load the timeseries
-- show the timeseries
--->
-```{python}
-import polars as pl
-import plotly.express as px
+todo
 
-path = "data/airpassengers/airpassengers.csv"
-df = pl.read_csv(path).with_columns(pl.col("Month").str.to_date("%Y-%m"))
-px.line(df, x="Month", y="#Passengers", height=400)
-```
+## methodology
 
-## data AirPassengers (from nixtla)
+1. think about your why
+2. gather data (process, explore)
+3. baseline
+4. measure
+5. improve
+6. restart from step 4 or less
 
-<!--
-- hello world of timeseries forecasting dataset
-- how to load the timeseries
-- show the timeseries
--->
-```{python}
-import polars as pl
+## example 1: AirPassengers
 
-url = "https://datasets-nixtla.s3.amazonaws.com/air-passengers.csv"
-air = pl.read_csv(url).with_columns(pl.col("ds").str.to_date())
-air.head(3)
-```
+todo
 
-## example of plotting with stastforecast (uses matplotlib)
+## baseline (options)
 
-```{python}
-from statsforecast import StatsForecast
+- Historical average
+- Naive (aka persistence in weather forecasting)
+- Moving Average
+- Seasonal Naive
+- ..., existing forecast (benchmark)
 
-sf = StatsForecast(models=[], freq="M")
+## baseline (code)
 
-sf.plot(air)
-```
+todo
 
-## split train test
+## measure (metrics)
 
-```{python}
-from datetime import date
+todo
 
-cutoff = date(1959, 1, 1)
-train = air.filter(pl.col("ds") < cutoff)
-test = air.filter(pl.col("ds") >= cutoff)
-df = pl.concat(
-    [
-        train.with_columns(pl.lit("train").alias("dataset")),
-        test.with_columns(pl.lit("test").alias("dataset")),
-    ]
-)
-px.line(df, x="ds", y="y", color="dataset")
-```
+## cross validation
 
+todo
+
+## measure (code)
+
+todo
+
+## statforecast
+
+todo
+
+## example 2: M5
+
+todo (show data and explain the why of supply chain)
+
+## mlforecast
+
+todo
+
+## probabilistic forecats
+
+todo
+
+## hierarchical forecast
+
+todo
+
+## neural forecast
+
+todo
+
+## foundational models
+
+todo
+
+## refs
+
+todo

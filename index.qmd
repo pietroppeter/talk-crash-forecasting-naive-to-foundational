@@ -111,13 +111,30 @@ air = pl.read_csv(url).with_columns(pl.col("ds").str.to_date())
 air.head(3)
 ```
 
+## example of plotting with stastforecast (uses matplotlib)
+
+```{python}
+from statsforecast import StatsForecast
+
+sf = StatsForecast(models=[], freq="M")
+
+sf.plot(air)
+```
+
 ## split train test
 
 ```{python}
-from statsforecast import StatForecast
+from datetime import date
 
-sf = StatForecast()
-
-sf.plot(air)
+cutoff = date(1959, 1, 1)
+train = air.filter(pl.col("ds") < cutoff)
+test = air.filter(pl.col("ds") >= cutoff)
+df = pl.concat(
+    [
+        train.with_columns(pl.lit("train").alias("dataset")),
+        test.with_columns(pl.lit("test").alias("dataset")),
+    ]
+)
+px.line(df, x="ds", y="y", color="dataset")
 ```
 

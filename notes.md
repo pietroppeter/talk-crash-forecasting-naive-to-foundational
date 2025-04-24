@@ -23,15 +23,15 @@ slides (target is 20)
 10. measure (metrics)
 11. cross validation [x]
 12. measure (code)
-13. statforecast
-14. M5
+13. statsforecast
+14. M5 [x]
 15. mlforecast [x]
 16. probabilistic forecast
-17. hierarchical
+17. hierarchical [x]
 18. neural forecast
 19. foundational [x]
 20. refs
-completed: 9/20
+completed: 11/20
 
 (skip decomposition?)
 

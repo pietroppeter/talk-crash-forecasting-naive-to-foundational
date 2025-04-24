@@ -293,28 +293,31 @@ Pietro Peterlongo, Data Scientist @ AgileLab
 <h2>statforecast</h2>
 <p>todo</p>
 </section>
-<section id="example-2-m5" class="slide level2">
-<h2>example 2: M5</h2>
-<p>todo (show data and explain the why of supply chain)</p>
-</section>
+<section id="m5-forecasting-competition" class="slide level2">
+<h2>M5 Forecasting competition</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">from</span> datasetsforecast.m5 <span class="im">import</span> M5</span>
+<span id="cb1-2"><a href=""></a>Y_df, X_df, S_df <span class="op">=</span> M5.load(<span class="st">"data"</span>)</span>
+<span id="cb1-3"><a href=""></a>sf.plot(Y_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<img data-src="images/m5.png" class="r-stretch"></section>
 <section id="mlforecast" class="slide level2">
 <h2>mlforecast</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> lightgbm <span class="im">as</span> lgbm</span>
-<span id="cb1-2"><a href=""></a><span class="im">from</span> mlforecast <span class="im">import</span> MLForecast</span>
-<span id="cb1-3"><a href=""></a><span class="im">from</span> mlforecast.lag_transforms <span class="im">import</span> ExpandingMean, RollingMean</span>
-<span id="cb1-4"><a href=""></a><span class="im">from</span> mlforecast.target_transforms <span class="im">import</span> Differences</span>
-<span id="cb1-5"><a href=""></a></span>
-<span id="cb1-6"><a href=""></a>fcst <span class="op">=</span> MLForecast(</span>
-<span id="cb1-7"><a href=""></a>    models<span class="op">=</span>[lgbm.LGBMRegressor()],</span>
-<span id="cb1-8"><a href=""></a>    freq<span class="op">=</span><span class="st">'D'</span>,</span>
-<span id="cb1-9"><a href=""></a>    lags<span class="op">=</span>[<span class="dv">7</span>, <span class="dv">14</span>],</span>
-<span id="cb1-10"><a href=""></a>    lag_transforms<span class="op">=</span>{</span>
-<span id="cb1-11"><a href=""></a>        <span class="dv">1</span>: [ExpandingMean()],</span>
-<span id="cb1-12"><a href=""></a>        <span class="dv">7</span>: [RollingMean(window_size<span class="op">=</span><span class="dv">28</span>)]</span>
-<span id="cb1-13"><a href=""></a>    },</span>
-<span id="cb1-14"><a href=""></a>    date_features<span class="op">=</span>[<span class="st">'dayofweek'</span>],</span>
-<span id="cb1-15"><a href=""></a>    target_transforms<span class="op">=</span>[Differences([<span class="dv">1</span>])],</span>
-<span id="cb1-16"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">import</span> lightgbm <span class="im">as</span> lgbm</span>
+<span id="cb2-2"><a href=""></a><span class="im">from</span> mlforecast <span class="im">import</span> MLForecast</span>
+<span id="cb2-3"><a href=""></a><span class="im">from</span> mlforecast.lag_transforms <span class="im">import</span> ExpandingMean, RollingMean</span>
+<span id="cb2-4"><a href=""></a><span class="im">from</span> mlforecast.target_transforms <span class="im">import</span> Differences</span>
+<span id="cb2-5"><a href=""></a></span>
+<span id="cb2-6"><a href=""></a>fcst <span class="op">=</span> MLForecast(</span>
+<span id="cb2-7"><a href=""></a>    models<span class="op">=</span>[lgbm.LGBMRegressor()],</span>
+<span id="cb2-8"><a href=""></a>    freq<span class="op">=</span><span class="st">'D'</span>,</span>
+<span id="cb2-9"><a href=""></a>    lags<span class="op">=</span>[<span class="dv">7</span>, <span class="dv">14</span>],</span>
+<span id="cb2-10"><a href=""></a>    lag_transforms<span class="op">=</span>{</span>
+<span id="cb2-11"><a href=""></a>        <span class="dv">1</span>: [ExpandingMean()],</span>
+<span id="cb2-12"><a href=""></a>        <span class="dv">7</span>: [RollingMean(window_size<span class="op">=</span><span class="dv">28</span>)]</span>
+<span id="cb2-13"><a href=""></a>    },</span>
+<span id="cb2-14"><a href=""></a>    date_features<span class="op">=</span>[<span class="st">'dayofweek'</span>],</span>
+<span id="cb2-15"><a href=""></a>    target_transforms<span class="op">=</span>[Differences([<span class="dv">1</span>])],</span>
+<span id="cb2-16"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="probabilistic-forecats" class="slide level2">
 <h2>probabilistic forecats</h2>
@@ -322,7 +325,28 @@ Pietro Peterlongo, Data Scientist @ AgileLab
 </section>
 <section id="hierarchical-forecast" class="slide level2">
 <h2>hierarchical forecast</h2>
-<p>todo</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="im">from</span> datasetsforecast.hierarchical <span class="im">import</span> HierarchicalData</span>
+<span id="cb3-2"><a href=""></a><span class="im">from</span> hierarchicalforecast.core <span class="im">import</span> HierarchicalReconciliation</span>
+<span id="cb3-3"><a href=""></a><span class="im">from</span> hierarchicalforecast.methods <span class="im">import</span> BottomUp, TopDown, MiddleOut</span>
+<span id="cb3-4"><a href=""></a></span>
+<span id="cb3-5"><a href=""></a><span class="co"># Create timeseries for all levels of the hierarchy</span></span>
+<span id="cb3-6"><a href=""></a>Y_df, S, tags <span class="op">=</span> HierarchicalData.load(<span class="st">'./data'</span>, <span class="st">'TourismSmall'</span>)</span>
+<span id="cb3-7"><a href=""></a><span class="co"># ...</span></span>
+<span id="cb3-8"><a href=""></a>Y_train_df, Y_test_df <span class="op">=</span> ...</span>
+<span id="cb3-9"><a href=""></a></span>
+<span id="cb3-10"><a href=""></a><span class="co"># Compute base predictions</span></span>
+<span id="cb3-11"><a href=""></a>fcst <span class="op">=</span> StatsForecast(models<span class="op">=</span>[AutoARIMA(season_length<span class="op">=</span><span class="dv">4</span>), freq<span class="op">=</span><span class="st">'QE'</span>)</span>
+<span id="cb3-12"><a href=""></a>Y_hat_df <span class="op">=</span> fcst.forecast(df<span class="op">=</span>Y_train_df, h<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb3-13"><a href=""></a></span>
+<span id="cb3-14"><a href=""></a><span class="co"># Reconcile the base predictions</span></span>
+<span id="cb3-15"><a href=""></a>reconcilers <span class="op">=</span> [</span>
+<span id="cb3-16"><a href=""></a>    BottomUp(),</span>
+<span id="cb3-17"><a href=""></a>    TopDown(method<span class="op">=</span><span class="st">'forecast_proportions'</span>),</span>
+<span id="cb3-18"><a href=""></a>    MiddleOut(middle_level<span class="op">=</span><span class="st">'Country/Purpose/State'</span>,</span>
+<span id="cb3-19"><a href=""></a>              top_down_method<span class="op">=</span><span class="st">'forecast_proportions'</span>)</span>
+<span id="cb3-20"><a href=""></a>]</span>
+<span id="cb3-21"><a href=""></a>hrec <span class="op">=</span> HierarchicalReconciliation(reconcilers<span class="op">=</span>reconcilers)</span>
+<span id="cb3-22"><a href=""></a>Y_rec_df <span class="op">=</span> hrec.reconcile(Y_hat_df<span class="op">=</span>Y_hat_df, Y_df<span class="op">=</span>Y_train_df, S<span class="op">=</span>S, tags<span class="op">=</span>tags)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="neural-forecast" class="slide level2">
 <h2>neural forecast</h2>
@@ -330,12 +354,12 @@ Pietro Peterlongo, Data Scientist @ AgileLab
 </section>
 <section id="foundational-models" class="slide level2">
 <h2>foundational models</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">from</span> nixtla <span class="im">import</span> NixtlaClient</span>
-<span id="cb2-2"><a href=""></a></span>
-<span id="cb2-3"><a href=""></a>nixtla_client <span class="op">=</span> NixtlaClient(api_key <span class="op">=</span> nixtla_api_key)</span>
-<span id="cb2-4"><a href=""></a>df <span class="op">=</span> pd.read_csv(<span class="st">'https://raw.githubusercontent.com/Nixtla/transfer-learning-time-series/main/datasets/electricity-short.csv'</span>)</span>
-<span id="cb2-5"><a href=""></a>fcst_df <span class="op">=</span> nixtla_client.forecast(df, h<span class="op">=</span><span class="dv">24</span>, level<span class="op">=</span>[<span class="dv">80</span>, <span class="dv">90</span>])</span>
-<span id="cb2-6"><a href=""></a>nixtla_client.plot(df, fcst_df, level<span class="op">=</span>[<span class="dv">80</span>, <span class="dv">90</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">from</span> nixtla <span class="im">import</span> NixtlaClient</span>
+<span id="cb4-2"><a href=""></a></span>
+<span id="cb4-3"><a href=""></a>nixtla_client <span class="op">=</span> NixtlaClient(api_key <span class="op">=</span> nixtla_api_key)</span>
+<span id="cb4-4"><a href=""></a>df <span class="op">=</span> pd.read_csv(<span class="st">'https://raw.githubusercontent.com/Nixtla/transfer-learning-time-series/main/datasets/electricity-short.csv'</span>)</span>
+<span id="cb4-5"><a href=""></a>fcst_df <span class="op">=</span> nixtla_client.forecast(df, h<span class="op">=</span><span class="dv">24</span>, level<span class="op">=</span>[<span class="dv">80</span>, <span class="dv">90</span>])</span>
+<span id="cb4-6"><a href=""></a>nixtla_client.plot(df, fcst_df, level<span class="op">=</span>[<span class="dv">80</span>, <span class="dv">90</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 <img data-src="images/timegpt.png" class="r-stretch"></section>
 <section id="refs" class="slide level2">

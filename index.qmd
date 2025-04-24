@@ -93,9 +93,15 @@ todo
 
 todo
 
-## example 2: M5
+## M5 Forecasting competition
 
-todo (show data and explain the why of supply chain)
+```python
+from datasetsforecast.m5 import M5
+Y_df, X_df, S_df = M5.load("data")
+sf.plot(Y_df)
+```
+
+![](images/m5.png)
 
 ## mlforecast
 
@@ -125,7 +131,30 @@ todo
 
 ## hierarchical forecast
 
-todo
+```python
+from datasetsforecast.hierarchical import HierarchicalData
+from hierarchicalforecast.core import HierarchicalReconciliation
+from hierarchicalforecast.methods import BottomUp, TopDown, MiddleOut
+
+# Create timeseries for all levels of the hierarchy
+Y_df, S, tags = HierarchicalData.load('./data', 'TourismSmall')
+# ...
+Y_train_df, Y_test_df = ...
+
+# Compute base predictions
+fcst = StatsForecast(models=[AutoARIMA(season_length=4), freq='QE')
+Y_hat_df = fcst.forecast(df=Y_train_df, h=4)
+
+# Reconcile the base predictions
+reconcilers = [
+    BottomUp(),
+    TopDown(method='forecast_proportions'),
+    MiddleOut(middle_level='Country/Purpose/State',
+              top_down_method='forecast_proportions')
+]
+hrec = HierarchicalReconciliation(reconcilers=reconcilers)
+Y_rec_df = hrec.reconcile(Y_hat_df=Y_hat_df, Y_df=Y_train_df, S=S, tags=tags)
+```
 
 ## neural forecast
 

@@ -48,9 +48,9 @@ time is the most important dimension
 other dimensions (e.g. product, market, ...) usually lead
 to forecasting _multiple_ time series (or _multivariate_ ones)
 
-## why nixtla
+## nixtla
 
-todo
+![](images/nixtla.png)
 
 ## methodology
 
@@ -83,7 +83,7 @@ todo
 
 ## cross validation
 
-todo
+![](images/crossvalidation.gif)
 
 ## measure (code)
 
@@ -99,7 +99,25 @@ todo (show data and explain the why of supply chain)
 
 ## mlforecast
 
-todo
+```python
+import lightgbm as lgbm
+from mlforecast import MLForecast
+from mlforecast.lag_transforms import ExpandingMean, RollingMean
+from mlforecast.target_transforms import Differences
+
+fcst = MLForecast(
+    models=[lgbm.LGBMRegressor()],
+    freq='D',
+    lags=[7, 14],
+    lag_transforms={
+        1: [ExpandingMean()],
+        7: [RollingMean(window_size=28)]
+    },
+    date_features=['dayofweek'],
+    target_transforms=[Differences([1])],
+)
+```
+
 
 ## probabilistic forecats
 
@@ -115,7 +133,16 @@ todo
 
 ## foundational models
 
-todo
+```python
+from nixtla import NixtlaClient
+
+nixtla_client = NixtlaClient(api_key = nixtla_api_key)
+df = pd.read_csv('https://raw.githubusercontent.com/Nixtla/transfer-learning-time-series/main/datasets/electricity-short.csv')
+fcst_df = nixtla_client.forecast(df, h=24, level=[80, 90])
+nixtla_client.plot(df, fcst_df, level=[80, 90])
+```
+
+![](images/timegpt.png)
 
 ## refs
 

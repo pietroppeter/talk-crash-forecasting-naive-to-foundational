@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
 <script src="index_files/libs/quarto-html/tabby.min.js"></script>
 <script src="index_files/libs/quarto-html/popper.min.js"></script>
 <script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
@@ -187,9 +187,6 @@
       margin-right: 0; 
     }
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-  
-  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -209,14 +206,7 @@ Pietro Peterlongo, Data Scientist @ AgileLab
 </section>
 <section id="agenda" class="slide level2">
 <h2>Agenda</h2>
-<ol type="1">
-<li>why, domain, data (intro)</li>
-<li>explore, naive, evaluate (basics)</li>
-<li>stats, ml, decompose, transform (workhorse)</li>
-<li>probabilistic, hierarchical (advanced)</li>
-<li>neural, foundational (more)</li>
-<li>refs</li>
-</ol>
+<p>todo</p>
 </section>
 <section id="hi-i-am-pietro" class="slide level2">
 <h2>👋 Hi, I am Pietro 👨‍👩‍👧</h2>
@@ -233,19 +223,6 @@ Pietro Peterlongo, Data Scientist @ AgileLab
 </section>
 <section id="why-forecasting" class="slide level2">
 <h2>why forecasting?</h2>
-<!--
-predicting things in the future should be useful, right?
-- let's make a short list of use cases
-- and let's try to think about the business value
-- sales
-  - predicting my sales allows me to
-    - plan my investments (should I hire more people?)
-    - plan my effort (if I predict sales are going down what should I do?)
-  - predicting my demand
-    - plan how much product to manifacture, buy or ship
-    - plan if I have the capacity to satisfy the demand
-    - reduce inventory or avoid lost sales
--->
 <p>domains</p>
 <ul>
 <li>📈 sales/demand</li>
@@ -255,25 +232,10 @@ predicting things in the future should be useful, right?
 <li>…</li>
 </ul>
 <p>where is the (business) value? 💰</p>
-<p>take better decisions! 💡 <!--how do I make things appear later?--></p>
+<p>take better decisions! 💡</p>
 </section>
 <section id="taking-time-seriously" class="slide level2">
 <h2>🏹 taking time seriously</h2>
-<!--
-time is the most important dimension in time series forecasting
-
-- time frequency
-- time horizon
-- lags (watch out for index 0 definition)
-
-
-other dimensions (multiple time series)
-- e.g. product, market, ...
-
-other problems in time series
-- anomaly detection, classification
-- forecast initialization
--->
 <p>time is the most important dimension</p>
 <ul>
 <li>time frequency (months, weeks, days, hours, …)</li>
@@ -282,170 +244,103 @@ other problems in time series
 </ul>
 <p>other dimensions (e.g.&nbsp;product, market, …) usually lead to forecasting <em>multiple</em> time series (or <em>multivariate</em> ones)</p>
 </section>
-<section id="hello-airpassengers---legacy" class="slide level2">
-<h2>hello AirPassengers - legacy</h2>
-<!--
-- hello world of timeseries forecasting dataset
-- how to load the timeseries
-- show the timeseries
--->
-<div id="7c33b376" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
-<span id="cb1-2"><a href=""></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
-<span id="cb1-3"><a href=""></a></span>
-<span id="cb1-4"><a href=""></a>path <span class="op">=</span> <span class="st">"data/airpassengers/airpassengers.csv"</span></span>
-<span id="cb1-5"><a href=""></a>df <span class="op">=</span> pl.read_csv(path).with_columns(pl.col(<span class="st">"Month"</span>).<span class="bu">str</span>.to_date(<span class="st">"%Y-%m"</span>))</span>
-<span id="cb1-6"><a href=""></a>px.line(df, x<span class="op">=</span><span class="st">"Month"</span>, y<span class="op">=</span><span class="st">"#Passengers"</span>, height<span class="op">=</span><span class="dv">400</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-        <script type="text/javascript">
-        window.PlotlyConfig = {MathJaxConfig: 'local'};
-        if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
-        </script>
-        <script type="module">import "https://cdn.plot.ly/plotly-3.0.1.min"</script>
-        
-</div>
-<div class="cell-output cell-output-display">
-<div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script type="text/javascript">if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
-        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.0.1.min.js"></script>                <div id="9d05787e-075d-4a12-b4b2-b4b0a7a74c69" class="plotly-graph-div" style="height:400px; width:100%;"></div>            <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("9d05787e-075d-4a12-b4b2-b4b0a7a74c69")) {                    Plotly.newPlot(                        "9d05787e-075d-4a12-b4b2-b4b0a7a74c69",                        [{"hovertemplate":"Month=%{x}\u003cbr\u003e#Passengers=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","line":{"color":"#636efa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"","orientation":"v","showlegend":false,"x":["1949-01-01","1949-02-01","1949-03-01","1949-04-01","1949-05-01","1949-06-01","1949-07-01","1949-08-01","1949-09-01","1949-10-01","1949-11-01","1949-12-01","1950-01-01","1950-02-01","1950-03-01","1950-04-01","1950-05-01","1950-06-01","1950-07-01","1950-08-01","1950-09-01","1950-10-01","1950-11-01","1950-12-01","1951-01-01","1951-02-01","1951-03-01","1951-04-01","1951-05-01","1951-06-01","1951-07-01","1951-08-01","1951-09-01","1951-10-01","1951-11-01","1951-12-01","1952-01-01","1952-02-01","1952-03-01","1952-04-01","1952-05-01","1952-06-01","1952-07-01","1952-08-01","1952-09-01","1952-10-01","1952-11-01","1952-12-01","1953-01-01","1953-02-01","1953-03-01","1953-04-01","1953-05-01","1953-06-01","1953-07-01","1953-08-01","1953-09-01","1953-10-01","1953-11-01","1953-12-01","1954-01-01","1954-02-01","1954-03-01","1954-04-01","1954-05-01","1954-06-01","1954-07-01","1954-08-01","1954-09-01","1954-10-01","1954-11-01","1954-12-01","1955-01-01","1955-02-01","1955-03-01","1955-04-01","1955-05-01","1955-06-01","1955-07-01","1955-08-01","1955-09-01","1955-10-01","1955-11-01","1955-12-01","1956-01-01","1956-02-01","1956-03-01","1956-04-01","1956-05-01","1956-06-01","1956-07-01","1956-08-01","1956-09-01","1956-10-01","1956-11-01","1956-12-01","1957-01-01","1957-02-01","1957-03-01","1957-04-01","1957-05-01","1957-06-01","1957-07-01","1957-08-01","1957-09-01","1957-10-01","1957-11-01","1957-12-01","1958-01-01","1958-02-01","1958-03-01","1958-04-01","1958-05-01","1958-06-01","1958-07-01","1958-08-01","1958-09-01","1958-10-01","1958-11-01","1958-12-01","1959-01-01","1959-02-01","1959-03-01","1959-04-01","1959-05-01","1959-06-01","1959-07-01","1959-08-01","1959-09-01","1959-10-01","1959-11-01","1959-12-01","1960-01-01","1960-02-01","1960-03-01","1960-04-01","1960-05-01","1960-06-01","1960-07-01","1960-08-01","1960-09-01","1960-10-01","1960-11-01","1960-12-01"],"xaxis":"x","y":{"dtype":"i2","bdata":"cAB2AIQAgQB5AIcAlACUAIgAdwBoAHYAcwB+AI0AhwB9AJUAqgCqAJ4AhQByAIwAkQCWALIAowCsALIAxwDHALgAogCSAKYAqwC0AMEAtQC3ANoA5gDyANEAvwCsAMIAxADEAOwA6wDlAPMACAEQAe0A0wC0AMkAzAC8AOsA4wDqAAgBLgElAQMB5QDLAOUA8gDpAAsBDQEOATsBbAFbATgBEgHtABYBHAEVAT0BOQE+AXYBnQGVAWMBMgEPATIBOwEtAWQBXAFjAaYB0QHTAZQBWwExAVABVAE+AWoBXAFrAbMB6wH5AZQBZwE2AVEBaAFWAZYBjAGkAdgBJAIvAs8BlwFqAZUBoQGHAaMBzQHYARcCbgJeAvwBzQGGAbAB"},"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Month"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"#Passengers"}},"legend":{"tracegroupgap":0},"height":400},                        {"responsive": true}                    ).then(function(){
-                            
-var gd = document.getElementById('9d05787e-075d-4a12-b4b2-b4b0a7a74c69');
-var x = new MutationObserver(function (mutations, observer) {{
-        var display = window.getComputedStyle(gd).display;
-        if (!display || display === 'none') {{
-            console.log([gd, 'removed!']);
-            Plotly.purge(gd);
-            observer.disconnect();
-        }}
-}});
+<section id="nixtla" class="slide level2">
+<h2>nixtla</h2>
 
-// Listen for the removal of the full notebook cells
-var notebookContainer = gd.closest('#notebook-container');
-if (notebookContainer) {{
-    x.observe(notebookContainer, {childList: true});
-}}
-
-// Listen for the clearing of the current output cell
-var outputEl = gd.closest('.output');
-if (outputEl) {{
-    x.observe(outputEl, {childList: true});
-}}
-
-                        })                };            </script>        </div>
-</div>
-</div>
+<img data-src="images/nixtla.png" class="r-stretch"></section>
+<section id="methodology" class="slide level2">
+<h2>methodology</h2>
+<ol type="1">
+<li>think about your why</li>
+<li>gather data (process, explore)</li>
+<li>baseline</li>
+<li>measure</li>
+<li>improve</li>
+<li>restart from step 4 or less</li>
+</ol>
 </section>
-<section id="data-airpassengers-from-nixtla" class="slide level2">
-<h2>data AirPassengers (from nixtla)</h2>
-<!--
-- hello world of timeseries forecasting dataset
-- how to load the timeseries
-- show the timeseries
--->
-<div id="f8e6446e" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
+<section id="example-1-airpassengers" class="slide level2">
+<h2>example 1: AirPassengers</h2>
+<p>todo</p>
+</section>
+<section id="baseline-options" class="slide level2">
+<h2>baseline (options)</h2>
+<ul>
+<li>Historical average</li>
+<li>Naive (aka persistence in weather forecasting)</li>
+<li>Moving Average</li>
+<li>Seasonal Naive</li>
+<li>…, existing forecast (benchmark)</li>
+</ul>
+</section>
+<section id="baseline-code" class="slide level2">
+<h2>baseline (code)</h2>
+<p>todo</p>
+</section>
+<section id="measure-metrics" class="slide level2">
+<h2>measure (metrics)</h2>
+<p>todo</p>
+</section>
+<section id="cross-validation" class="slide level2">
+<h2>cross validation</h2>
+
+<img data-src="images/crossvalidation.gif" class="r-stretch"></section>
+<section id="measure-code" class="slide level2">
+<h2>measure (code)</h2>
+<p>todo</p>
+</section>
+<section id="statforecast" class="slide level2">
+<h2>statforecast</h2>
+<p>todo</p>
+</section>
+<section id="example-2-m5" class="slide level2">
+<h2>example 2: M5</h2>
+<p>todo (show data and explain the why of supply chain)</p>
+</section>
+<section id="mlforecast" class="slide level2">
+<h2>mlforecast</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> lightgbm <span class="im">as</span> lgbm</span>
+<span id="cb1-2"><a href=""></a><span class="im">from</span> mlforecast <span class="im">import</span> MLForecast</span>
+<span id="cb1-3"><a href=""></a><span class="im">from</span> mlforecast.lag_transforms <span class="im">import</span> ExpandingMean, RollingMean</span>
+<span id="cb1-4"><a href=""></a><span class="im">from</span> mlforecast.target_transforms <span class="im">import</span> Differences</span>
+<span id="cb1-5"><a href=""></a></span>
+<span id="cb1-6"><a href=""></a>fcst <span class="op">=</span> MLForecast(</span>
+<span id="cb1-7"><a href=""></a>    models<span class="op">=</span>[lgbm.LGBMRegressor()],</span>
+<span id="cb1-8"><a href=""></a>    freq<span class="op">=</span><span class="st">'D'</span>,</span>
+<span id="cb1-9"><a href=""></a>    lags<span class="op">=</span>[<span class="dv">7</span>, <span class="dv">14</span>],</span>
+<span id="cb1-10"><a href=""></a>    lag_transforms<span class="op">=</span>{</span>
+<span id="cb1-11"><a href=""></a>        <span class="dv">1</span>: [ExpandingMean()],</span>
+<span id="cb1-12"><a href=""></a>        <span class="dv">7</span>: [RollingMean(window_size<span class="op">=</span><span class="dv">28</span>)]</span>
+<span id="cb1-13"><a href=""></a>    },</span>
+<span id="cb1-14"><a href=""></a>    date_features<span class="op">=</span>[<span class="st">'dayofweek'</span>],</span>
+<span id="cb1-15"><a href=""></a>    target_transforms<span class="op">=</span>[Differences([<span class="dv">1</span>])],</span>
+<span id="cb1-16"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="probabilistic-forecats" class="slide level2">
+<h2>probabilistic forecats</h2>
+<p>todo</p>
+</section>
+<section id="hierarchical-forecast" class="slide level2">
+<h2>hierarchical forecast</h2>
+<p>todo</p>
+</section>
+<section id="neural-forecast" class="slide level2">
+<h2>neural forecast</h2>
+<p>todo</p>
+</section>
+<section id="foundational-models" class="slide level2">
+<h2>foundational models</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">from</span> nixtla <span class="im">import</span> NixtlaClient</span>
 <span id="cb2-2"><a href=""></a></span>
-<span id="cb2-3"><a href=""></a>url <span class="op">=</span> <span class="st">"https://datasets-nixtla.s3.amazonaws.com/air-passengers.csv"</span></span>
-<span id="cb2-4"><a href=""></a>air <span class="op">=</span> pl.read_csv(url).with_columns(pl.col(<span class="st">"ds"</span>).<span class="bu">str</span>.to_date())</span>
-<span id="cb2-5"><a href=""></a>air.head(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="16">
-<div><style>
-.dataframe > thead > tr,
-.dataframe > tbody > tr {
-  text-align: right;
-  white-space: pre-wrap;
-}
-</style>
-<small>shape: (3, 3)</small>
-<table class="dataframe caption-top" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th">unique_id</th>
-<th data-quarto-table-cell-role="th">ds</th>
-<th data-quarto-table-cell-role="th">y</th>
-</tr>
-<tr class="even">
-<th>str</th>
-<th>date</th>
-<th>i64</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>"AirPassengers"</td>
-<td>1949-01-01</td>
-<td>112</td>
-</tr>
-<tr class="even">
-<td>"AirPassengers"</td>
-<td>1949-02-01</td>
-<td>118</td>
-</tr>
-<tr class="odd">
-<td>"AirPassengers"</td>
-<td>1949-03-01</td>
-<td>132</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</section>
-<section id="example-of-plotting-with-stastforecast-uses-matplotlib" class="slide level2">
-<h2>example of plotting with stastforecast (uses matplotlib)</h2>
-<div id="01dc96f3" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="im">from</span> statsforecast <span class="im">import</span> StatsForecast</span>
-<span id="cb3-2"><a href=""></a></span>
-<span id="cb3-3"><a href=""></a>sf <span class="op">=</span> StatsForecast(models<span class="op">=</span>[], freq<span class="op">=</span><span class="st">"M"</span>)</span>
-<span id="cb3-4"><a href=""></a></span>
-<span id="cb3-5"><a href=""></a>sf.plot(air)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href=""></a>nixtla_client <span class="op">=</span> NixtlaClient(api_key <span class="op">=</span> nixtla_api_key)</span>
+<span id="cb2-4"><a href=""></a>df <span class="op">=</span> pd.read_csv(<span class="st">'https://raw.githubusercontent.com/Nixtla/transfer-learning-time-series/main/datasets/electricity-short.csv'</span>)</span>
+<span id="cb2-5"><a href=""></a>fcst_df <span class="op">=</span> nixtla_client.forecast(df, h<span class="op">=</span><span class="dv">24</span>, level<span class="op">=</span>[<span class="dv">80</span>, <span class="dv">90</span>])</span>
+<span id="cb2-6"><a href=""></a>nixtla_client.plot(df, fcst_df, level<span class="op">=</span>[<span class="dv">80</span>, <span class="dv">90</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
-</div>
-<img data-src="index_files/figure-revealjs/cell-4-output-1.png" class="r-stretch"></section>
-<section id="split-train-test" class="slide level2">
-<h2>split train test</h2>
-<div id="128ffafe" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">from</span> datetime <span class="im">import</span> date</span>
-<span id="cb4-2"><a href=""></a></span>
-<span id="cb4-3"><a href=""></a>cutoff <span class="op">=</span> date(<span class="dv">1959</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb4-4"><a href=""></a>train <span class="op">=</span> air.<span class="bu">filter</span>(pl.col(<span class="st">"ds"</span>) <span class="op">&lt;</span> cutoff)</span>
-<span id="cb4-5"><a href=""></a>test <span class="op">=</span> air.<span class="bu">filter</span>(pl.col(<span class="st">"ds"</span>) <span class="op">&gt;=</span> cutoff)</span>
-<span id="cb4-6"><a href=""></a>df <span class="op">=</span> pl.concat(</span>
-<span id="cb4-7"><a href=""></a>    [</span>
-<span id="cb4-8"><a href=""></a>        train.with_columns(pl.lit(<span class="st">"train"</span>).alias(<span class="st">"dataset"</span>)),</span>
-<span id="cb4-9"><a href=""></a>        test.with_columns(pl.lit(<span class="st">"test"</span>).alias(<span class="st">"dataset"</span>)),</span>
-<span id="cb4-10"><a href=""></a>    ]</span>
-<span id="cb4-11"><a href=""></a>)</span>
-<span id="cb4-12"><a href=""></a>px.line(df, x<span class="op">=</span><span class="st">"ds"</span>, y<span class="op">=</span><span class="st">"y"</span>, color<span class="op">=</span><span class="st">"dataset"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script type="text/javascript">if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
-        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.0.1.min.js"></script>                <div id="fd0d6b4e-2cef-403a-b986-4ea35e122e33" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("fd0d6b4e-2cef-403a-b986-4ea35e122e33")) {                    Plotly.newPlot(                        "fd0d6b4e-2cef-403a-b986-4ea35e122e33",                        [{"hovertemplate":"dataset=train\u003cbr\u003eds=%{x}\u003cbr\u003ey=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"train","line":{"color":"#636efa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"train","orientation":"v","showlegend":true,"x":["1949-01-01","1949-02-01","1949-03-01","1949-04-01","1949-05-01","1949-06-01","1949-07-01","1949-08-01","1949-09-01","1949-10-01","1949-11-01","1949-12-01","1950-01-01","1950-02-01","1950-03-01","1950-04-01","1950-05-01","1950-06-01","1950-07-01","1950-08-01","1950-09-01","1950-10-01","1950-11-01","1950-12-01","1951-01-01","1951-02-01","1951-03-01","1951-04-01","1951-05-01","1951-06-01","1951-07-01","1951-08-01","1951-09-01","1951-10-01","1951-11-01","1951-12-01","1952-01-01","1952-02-01","1952-03-01","1952-04-01","1952-05-01","1952-06-01","1952-07-01","1952-08-01","1952-09-01","1952-10-01","1952-11-01","1952-12-01","1953-01-01","1953-02-01","1953-03-01","1953-04-01","1953-05-01","1953-06-01","1953-07-01","1953-08-01","1953-09-01","1953-10-01","1953-11-01","1953-12-01","1954-01-01","1954-02-01","1954-03-01","1954-04-01","1954-05-01","1954-06-01","1954-07-01","1954-08-01","1954-09-01","1954-10-01","1954-11-01","1954-12-01","1955-01-01","1955-02-01","1955-03-01","1955-04-01","1955-05-01","1955-06-01","1955-07-01","1955-08-01","1955-09-01","1955-10-01","1955-11-01","1955-12-01","1956-01-01","1956-02-01","1956-03-01","1956-04-01","1956-05-01","1956-06-01","1956-07-01","1956-08-01","1956-09-01","1956-10-01","1956-11-01","1956-12-01","1957-01-01","1957-02-01","1957-03-01","1957-04-01","1957-05-01","1957-06-01","1957-07-01","1957-08-01","1957-09-01","1957-10-01","1957-11-01","1957-12-01","1958-01-01","1958-02-01","1958-03-01","1958-04-01","1958-05-01","1958-06-01","1958-07-01","1958-08-01","1958-09-01","1958-10-01","1958-11-01","1958-12-01"],"xaxis":"x","y":{"dtype":"i2","bdata":"cAB2AIQAgQB5AIcAlACUAIgAdwBoAHYAcwB+AI0AhwB9AJUAqgCqAJ4AhQByAIwAkQCWALIAowCsALIAxwDHALgAogCSAKYAqwC0AMEAtQC3ANoA5gDyANEAvwCsAMIAxADEAOwA6wDlAPMACAEQAe0A0wC0AMkAzAC8AOsA4wDqAAgBLgElAQMB5QDLAOUA8gDpAAsBDQEOATsBbAFbATgBEgHtABYBHAEVAT0BOQE+AXYBnQGVAWMBMgEPATIBOwEtAWQBXAFjAaYB0QHTAZQBWwExAVABVAE+AWoBXAFrAbMB6wH5AZQBZwE2AVEB"},"yaxis":"y","type":"scatter"},{"hovertemplate":"dataset=test\u003cbr\u003eds=%{x}\u003cbr\u003ey=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"test","line":{"color":"#EF553B","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"test","orientation":"v","showlegend":true,"x":["1959-01-01","1959-02-01","1959-03-01","1959-04-01","1959-05-01","1959-06-01","1959-07-01","1959-08-01","1959-09-01","1959-10-01","1959-11-01","1959-12-01","1960-01-01","1960-02-01","1960-03-01","1960-04-01","1960-05-01","1960-06-01","1960-07-01","1960-08-01","1960-09-01","1960-10-01","1960-11-01","1960-12-01"],"xaxis":"x","y":{"dtype":"i2","bdata":"aAFWAZYBjAGkAdgBJAIvAs8BlwFqAZUBoQGHAaMBzQHYARcCbgJeAvwBzQGGAbAB"},"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"ds"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"y"}},"legend":{"title":{"text":"dataset"},"tracegroupgap":0}},                        {"responsive": true}                    ).then(function(){
-                            
-var gd = document.getElementById('fd0d6b4e-2cef-403a-b986-4ea35e122e33');
-var x = new MutationObserver(function (mutations, observer) {{
-        var display = window.getComputedStyle(gd).display;
-        if (!display || display === 'none') {{
-            console.log([gd, 'removed!']);
-            Plotly.purge(gd);
-            observer.disconnect();
-        }}
-}});
-
-// Listen for the removal of the full notebook cells
-var notebookContainer = gd.closest('#notebook-container');
-if (notebookContainer) {{
-    x.observe(notebookContainer, {childList: true});
-}}
-
-// Listen for the clearing of the current output cell
-var outputEl = gd.closest('.output');
-if (outputEl) {{
-    x.observe(outputEl, {childList: true});
-}}
-
-                        })                };            </script>        </div>
-</div>
-</div>
+<img data-src="images/timegpt.png" class="r-stretch"></section>
+<section id="refs" class="slide level2">
+<h2>refs</h2>
+<p>todo</p>
 
 </section>
     </div>
